@@ -2,37 +2,25 @@ package com.ankit.learningpoint.datastructure.graph;
 
 public class PlayGraph {
     public static void main(String[] args) {
-        IGraph graph = new AdjacencyMatrixGraphImpl(4);
-        graph.addEdge(0,1);
-        graph.addEdge(0,2);
-        graph.addEdge(0,3);
+        IGraph graph = new AdjacencyListGraphImpl();
+        Vertex<String> a = new Vertex("a");
+        Vertex<String> b = new Vertex("b");
+        Vertex<String> c = new Vertex("c");
+        Vertex<String> d = new Vertex("d");
 
-        graph.addEdge(1,2);
-        graph.addEdge(1,3);
+        graph.addEdge(a,b);
+        graph.addEdge(a,c);
+        graph.addEdge(a,d);
 
-        graph.addEdge(2,3);
-        graph.addEdge(2,1);
+        graph.addEdge(b,c);
+        graph.addEdge(b,d);
 
-        graph.addEdge(3,1);
-        graph.addEdge(3,2);
+        graph.addEdge(c,d);
 
-        graph.printGraph();
-
-        graph = new AdjacencyListGraphImpl(4);
-        graph.addEdge(0,1);
-        graph.addEdge(0,2);
-        graph.addEdge(0,3);
-
-        graph.addEdge(1,2);
-        graph.addEdge(1,3);
-
-        graph.addEdge(2,3);
-        graph.addEdge(2,1);
-
-        graph.addEdge(3,1);
-        graph.addEdge(3,2);
+        graph.addEdge(d,a);
 
         graph.printGraph();
+
 
     }
 }

@@ -1,38 +1,48 @@
 package com.ankit.learningpoint.datastructure.graph;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class AdjacencyMatrixGraphImpl implements IGraph {
 
     private int vertexCount;
 
-    private int adjMatrix [][];
+    private Integer adjMatrix [][];
 
     public AdjacencyMatrixGraphImpl(int vertexCount) {
         this.vertexCount = vertexCount;
-        adjMatrix = new int[vertexCount][vertexCount];
+        adjMatrix = new Integer[vertexCount][vertexCount];
+        Stream.of(adjMatrix).forEach(row-> {
+            Arrays.fill(row,0);
+        });
     }
 
     @Override
-    public void addEdge(int v1, int v2) {
-        adjMatrix[v1][v2] = 1;
-        //adjMatrix[v2][v1] = 1; // for undirected graph
+    public void addEdge(Vertex v1, Vertex v2) {
+        adjMatrix[v1.getIdentifier()][v2.getIdentifier()]=1;
     }
 
     @Override
-    public void removeEdge(int v1, int v2) {
-        adjMatrix[v1][v2] = 0;
-        //adjMatrix[v2][v1] = 0; // for undirected graph
+    public void removeEdge(Vertex v1, Vertex v2) {
+        adjMatrix[v1.getIdentifier()][v2.getIdentifier()]= 0;
+    }
+
+    /**
+     * For simplicity Adding new vertex will remove all edges
+     * @param v
+     */
+    @Override
+    public void addVertex(Vertex v) {
+        this.vertexCount++;
+        adjMatrix = new Integer[vertexCount][vertexCount];
     }
 
     @Override
     public void printGraph() {
-        System.out.println("AdjacencyMatrixGraphImpl");
-        for (int[] row :adjMatrix) {
-            for (int col: row) {
-                System.out.print(col+ " ");
-            }
+        Stream.of(adjMatrix).forEach((row) -> {
+            Stream.of(row).forEach((val) -> System.out.print(val+ " "));
             System.out.println();
-        }
-
-
+        });
     }
+
 }
