@@ -1,37 +1,43 @@
 package com.ankit.learningpoint.datastructure.graph;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class AdjacencyListGraphImpl implements IGraph{
 
-    private int vertexCount;
+    private Map<Vertex, LinkedList<Vertex>> adjList;
 
-    private LinkedList<Integer>[] adjList;
+    public AdjacencyListGraphImpl() {
+        adjList = new HashMap<>();
+    }
 
-    public AdjacencyListGraphImpl(int vertexCount) {
-        this.vertexCount = vertexCount;
-        adjList = new LinkedList[vertexCount];
-        for (int i = 0 ; i< adjList.length; i++) {
-            adjList[i] = new LinkedList<>();
+
+    @Override
+    public void addEdge(Vertex v1, Vertex v2) {
+        if(!adjList.keySet().contains(v1)){
+            addVertex(v1);
         }
+        if(!adjList.keySet().contains(v2)){
+            addVertex(v2);
+        }
+        adjList.get(v1).addFirst(v2);
     }
 
     @Override
-    public void addEdge(int v1, int v2) {
-        adjList[v1].addFirst(v2);
-        //adjList[v2].addFirst(v1); // for
+    public void removeEdge(Vertex v1, Vertex v2) {
+        adjList.get(v1).remove(v2);
     }
 
     @Override
-    public void removeEdge(int v1, int v2) {
-        adjList[v1].remove(v2);
+    public void addVertex(Vertex v) {
+        adjList.putIfAbsent(v, new LinkedList<>());
     }
 
     @Override
     public void printGraph() {
-        System.out.println("AdjacencyListGraphImpl");
-        for (int i =0 ; i< adjList.length; i++) {
-            System.out.println(i+ " is connected to "+adjList[i]);
-        }
+        adjList.entrySet().forEach((entrySet)->{
+            System.out.println("vertex "+entrySet.getKey()+" is connected to "+entrySet.getValue());
+        });
     }
 }
